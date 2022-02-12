@@ -83,7 +83,3 @@ public:
 
 };
 ```
-
-### References
-- https://stackoverflow.com/questions/20207400/dynamically-allocated-string-array-then-change-its-value
-- https://thedeveloperblog.com/cpp/cpp-int-to-string

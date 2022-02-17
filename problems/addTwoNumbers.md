@@ -138,3 +138,93 @@ public:
     }
 };
 ```
+### Pass 3
+I finally was able to solve the problem!
+It really helped to write down all my ideas before starting, and having a clear structure set in my head.
+It also helped that my mind was able to focus a lot easier. 
+The issues I had were mainly due to figuring out how to deal with the extra nodes when the lists were of different sizes.
+Overall, I'm pretty happy to have been able to find a solution for the problem, though I later found out there were better solutions to this problem :')
+``` c++
+/**
+ * Definition for singly-linked list.
+ * struct ListNode {
+ *     int val;
+ *     ListNode *next;
+ *     ListNode() : val(0), next(nullptr) {}
+ *     ListNode(int x) : val(x), next(nullptr) {}
+ *     ListNode(int x, ListNode *next) : val(x), next(next) {}
+ * };
+ */
+class Solution {
+public:
+    ListNode* addTwoNumbers(ListNode* l1, ListNode* l2) {
+                /**
+        create a new sum node
+        loop through the nodes from l1 and l2
+        once both are null exit
+            
+            sum nodes from l1 and l2 and add to sum
+            if the sum is over 9
+                subtract ten from the sum
+                then create a new node to the sum and set it to one
+                
+            else the sum is <= 9 
+                add a new node to sum
+                set l1 and l2 to equal the next node
+            call addTwoNumbers with l1 and l2 as params
+            return sum
+        **/
+        ListNode *sum = l2;
+
+        while(l1 != NULL && l2 != NULL){
+            // incase we need to carry 1 one over 
+            if(l1->val == -1){
+                l2->val += 1;
+                if(l1->next == NULL){
+                    l1->next = new ListNode(0);
+                    l1 = l1->next;
+                } else{
+                    l1 = l1->next;
+                }
+                continue;
+            }
+            // otherwise continue to add
+            sum->val = l1->val + l2->val;
+            // if answer is over 10 then subtract 10 to result
+            if (sum->val >= 10){
+                sum->val -= 10;
+                // let l1 equal -1 to let the program know there is one leftover
+                l1->val= -1;
+                // incase the both lists ends or just l2 ends, add a new node to l2
+                if((l1->next == NULL && l2->next==NULL) || (l1->next != NULL && l2->next==NULL) )
+                {
+                    l2->next = new ListNode(0);
+                } // incase l2 ends early, add anew 
+                
+                l2 = l2->next;
+                
+            } 
+            else // if the answer is less then 10
+            {
+                // check if any of the linked lists end early to add a new node
+                if(l1->next != NULL && l2->next==NULL){
+                    l2->next = new ListNode(0);
+                } else if(l1->next == NULL && l2->next!=NULL ){
+                    l1->next = new ListNode(0);
+                }
+                // go to the next node
+                l1 = l1->next;
+                l2 = l2->next;
+                
+            }
+            
+            // call itself to go to the next node
+            addTwoNumbers(l1,l2);
+            
+            // return sum
+            return sum;
+        } 
+        return l1;
+    }
+};
+```

@@ -138,7 +138,7 @@ public:
     }
 };
 ```
-### Pass 3
+### pass 3
 I finally was able to solve the problem!
 It really helped to write down all my ideas before starting, and having a clear structure set in my head.
 It also helped that my mind was able to focus a lot easier. 
